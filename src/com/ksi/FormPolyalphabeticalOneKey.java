@@ -11,51 +11,98 @@ package com.ksi;
  */
 public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
 
-    private char teksGenerate[][] = new char[26][26];
+    private char textGenerateNow[] = new char[26];
+    char[] textArray;
+    int kliken = 0;
+    int klikdek = 0;
 
     /**
      * Creates new form FormPolyalphabeticalOneKey
      */
     public FormPolyalphabeticalOneKey() {
         initComponents();
+        fieldChipperTeksEn.setEditable(false);
+        fieldPlainTeksDek.setEditable(false);
     }
 
-    private String enkripsi(String plainTeks, String key) {
-        String chipperText = "";
-        plainTeks = plainTeks.toUpperCase();
-        key = key.toUpperCase();
-        for (int i = 0, j = 0; i < plainTeks.length(); i++) {
-            char c = plainTeks.charAt(i);
-            if ((c < 'A' || c > 'Z') && c != ' ') {
-                continue;
+    private void generateKey(String key) {
+        String abcd = "abcdefghijklmnopqrstuvwxyz";
+        textArray = abcd.toCharArray();
+        char[] keyArr = key.toCharArray();
+
+        for (int i = 0; i < 26; i++) {
+            if (i < keyArr.length) {
+                textGenerateNow[i] = keyArr[i];
+            } else {
+                for (int j = 0; j < 26; j++) {
+                    int l = i + 1;
+                    boolean ketemu = false;
+                    for (int k = 0; k < i + 1; k++) {
+                        if (textGenerateNow[k] == textArray[j]) {
+                            ketemu = true;
+                        }
+                    }
+                    if (!ketemu) {
+                        textGenerateNow[i] = textArray[j];
+                        break;
+                    }
+                }
             }
-            if(c == ' '){
-                chipperText += ' ';
-            }else{
-                chipperText += (char) ((c + key.charAt(j) - 2 * 'A') % 26 + 'A');
-            }
-            
-            j = ++j % key.length();
+
         }
+
+    }
+
+    private String enkripsi(String plainText, String key) {
+        if (kliken == 0 && klikdek != 1) {
+            generateKey(key);
+            kliken = 1;
+        }
+
+        char[] plainTextArr = plainText.toCharArray();
+        String chipperText = "";
+
+        for (int i = 0; i < plainTextArr.length; i++) {
+            int position = 0;
+            for (int j = 0; j < 26; j++) {
+                if (plainTextArr[i] == textArray[j]) {
+                    position = j;
+                }
+            }
+            if (plainTextArr[i] == ' ') {
+                chipperText += ' ';
+            } else {
+                chipperText += textGenerateNow[position];
+            }
+
+        }
+
         return chipperText;
     }
 
     private String dekripsi(String chipperText, String key) {
-        String plainText = "";
-        chipperText = chipperText.toUpperCase();
-        key = key.toUpperCase();
-        for (int i = 0, j = 0; i < chipperText.length(); i++) {
-            char c = chipperText.charAt(i);
-            if ((c < 'A' || c > 'Z') && c != ' ') {
-                continue;
-            }
-            if(c == ' '){
-                plainText += ' ';
-            }else{
-                plainText += (char) ((c - key.charAt(j) + 26) % 26 + 'A');
-            }
-            j = ++j % key.length();
+        if (kliken != 1 && klikdek == 0) {
+            generateKey(key);
+            klikdek = 1;
         }
+        char[] chipperTextArr = chipperText.toCharArray();
+        String plainText = "";
+
+        for (int i = 0; i < chipperTextArr.length; i++) {
+            int position = 0;
+            for (int j = 0; j < 26; j++) {
+                if (chipperTextArr[i] == textGenerateNow[j]) {
+                    position = j;
+                }
+            }
+            if (chipperTextArr[i] == ' ') {
+                plainText += ' ';
+            } else {
+                plainText += textArray[position];
+            }
+
+        }
+
         return plainText;
     }
 
@@ -84,6 +131,9 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
         fieldKunciDek = new javax.swing.JTextField();
         buttonProsesDek = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        buttonReset = new javax.swing.JButton();
+        buttonReset1 = new javax.swing.JButton();
+        buttonKembali = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -155,10 +205,35 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
 
         jLabel8.setText("Plain Teks");
 
+        buttonReset.setText("Reset");
+        buttonReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonResetActionPerformed(evt);
+            }
+        });
+
+        buttonReset1.setText("Reset");
+        buttonReset1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonReset1ActionPerformed(evt);
+            }
+        });
+
+        buttonKembali.setText("Kembali");
+        buttonKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonKembaliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(180, 180, 180))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -174,7 +249,10 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
                                     .addComponent(jLabel8))
                                 .addGap(65, 65, 65)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldKunciDek, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(fieldKunciDek, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(buttonReset1))
                                     .addComponent(fieldChipperTeksDek)
                                     .addComponent(buttonProsesDek)
                                     .addComponent(fieldPlainTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -185,15 +263,17 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(65, 65, 65)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(fieldKunciEn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(fieldKunciEn, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(buttonReset))
                                     .addComponent(fieldPlainTeksEn)
                                     .addComponent(buttonProsesEn)
-                                    .addComponent(fieldChipperTeksEn, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE))))))
+                                    .addComponent(fieldChipperTeksEn, javax.swing.GroupLayout.DEFAULT_SIZE, 359, Short.MAX_VALUE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buttonKembali)))
                 .addContainerGap(108, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(180, 180, 180))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,7 +293,9 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel3))
-                    .addComponent(fieldKunciEn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(fieldKunciEn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonReset)))
                 .addGap(18, 18, 18)
                 .addComponent(buttonProsesEn)
                 .addGap(18, 18, 18)
@@ -222,7 +304,6 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
                     .addComponent(fieldChipperTeksEn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(69, 69, 69)
                 .addComponent(jLabel5)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
@@ -235,14 +316,18 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(jLabel7))
-                    .addComponent(fieldKunciDek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(fieldKunciDek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buttonReset1)))
                 .addGap(18, 18, 18)
                 .addComponent(buttonProsesDek)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8)
                     .addComponent(fieldPlainTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(95, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                .addComponent(buttonKembali)
+                .addContainerGap())
         );
 
         jLabel1.getAccessibleContext().setAccessibleDescription("");
@@ -284,8 +369,26 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldKunciDekActionPerformed
 
     private void buttonProsesDekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonProsesDekActionPerformed
+
         fieldPlainTeksDek.setText(dekripsi(fieldChipperTeksDek.getText(), fieldKunciDek.getText()));
     }//GEN-LAST:event_buttonProsesDekActionPerformed
+
+    private void buttonResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonResetActionPerformed
+        kliken = 0;
+        klikdek = 0;
+        fieldKunciEn.setText("");
+    }//GEN-LAST:event_buttonResetActionPerformed
+
+    private void buttonReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReset1ActionPerformed
+        klikdek = 0;
+        kliken = 0;
+        fieldKunciDek.setText("");
+    }//GEN-LAST:event_buttonReset1ActionPerformed
+
+    private void buttonKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliActionPerformed
+        new FormEncryptionApp().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonKembaliActionPerformed
 
     /**
      * @param args the command line arguments
@@ -324,8 +427,11 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonKembali;
     private javax.swing.JButton buttonProsesDek;
     private javax.swing.JButton buttonProsesEn;
+    private javax.swing.JButton buttonReset;
+    private javax.swing.JButton buttonReset1;
     private javax.swing.JTextField fieldChipperTeksDek;
     private javax.swing.JTextField fieldChipperTeksEn;
     private javax.swing.JTextField fieldKunciDek;

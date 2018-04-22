@@ -9,104 +9,146 @@ package com.ksi;
  *
  * @author Biekaeksa
  */
-public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
-    private char textGenerateNow[] = new char[26];
-    char[] textArray;
-    int kliken =0;
-    int klikdek=0;
-    String keyEn = " ";
-    String keyDek = " ";
+public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
+
+    private char[] textGenerateNow1 = new char[26];
+    private char[] textGenerateNow2 = new char[26];
+    char[] textArray1;
+    char[] textArray2;
+    int kliken = 0;
+    int klikdek = 0;
+
     /**
      * Creates new form FormPlyalphabeticalTwoKey
      */
-    public FormPlyalphabeticalTwoKey() {
+    public FormPolyalphabeticalTwoKey() {
         initComponents();
     }
-    
-    private void generateKey(String key) {
+
+    private void generateKeyOne(String key) {
         String abcd = "abcdefghijklmnopqrstuvwxyz";
-        textArray = abcd.toCharArray();
+        textArray1 = abcd.toCharArray();
         char[] keyArr = key.toCharArray();
-        
+
         for (int i = 0; i < 26; i++) {
             if (i < keyArr.length) {
-                textGenerateNow[i] = keyArr[i];
+                textGenerateNow1[i] = keyArr[i];
             } else {
                 for (int j = 0; j < 26; j++) {
-                    int l = i+1;
                     boolean ketemu = false;
-                    for(int k = 0 ; k < i + 1;k++){
-                        if(textGenerateNow[k] == textArray[j]){
+                    for (int k = 0; k < i + 1; k++) {
+                        if (textGenerateNow1[k] == textArray1[j]) {
                             ketemu = true;
                         }
                     }
-                    if(!ketemu){
-                        textGenerateNow[i] = textArray[j];
+                    if (!ketemu) {
+                        textGenerateNow1[i] = textArray1[j];
                         break;
                     }
                 }
             }
-            
+
         }
 
     }
-    
-    private String enkripsi(String plainText, String key) {
-        if(kliken == 0 && klikdek != 1){
-            generateKey(key);
-            kliken = 1;
-            keyEn = key;
-        }else if(kliken == 1 && keyEn != key){
-            generateKey(key);
+
+    private void generateKeyTwo(String key) {
+        String abcd = "abcdefghijklmnopqrstuvwxyz";
+
+        textArray2 = abcd.toCharArray();
+        char[] keyArr = key.toCharArray();
+
+        for (int i = 0; i < 26; i++) {
+            if (i < keyArr.length) {
+                textGenerateNow2[i] = keyArr[i];
+            } else {
+                for (int j = 0; j < 26; j++) {
+                    boolean ketemu = false;
+                    for (int k = 0; k < i + 1; k++) {
+                        if (textGenerateNow2[k] == textArray2[j]) {
+                            ketemu = true;
+                        }
+                    }
+                    if (!ketemu) {
+                        textGenerateNow2[i] = textArray2[j];
+                        break;
+                    }
+                }
+            }
+
         }
-        
+        for (int l = 0; l < textGenerateNow2.length; l++) {
+            abcd += textGenerateNow2[l];
+        }
+        System.out.println(abcd);
+
+    }
+
+    private String enkripsi(String plainText, String key1, String key2) {
+        if (kliken == 0 && klikdek != 1) {
+            generateKeyOne(key1);
+            generateKeyTwo(key2);
+            kliken = 1;
+        }
+
         char[] plainTextArr = plainText.toCharArray();
         String chipperText = "";
-        
-        for(int i=0;i<plainTextArr.length;i++){
+
+        for (int i = 0; i < plainTextArr.length; i++) {
             int position = 0;
-            for(int j =0;j<26;j++){
-                if(plainTextArr[i] == textArray[j]){
+            int finalPosition = 0;
+            for (int j = 0; j < 26; j++) {
+                if (plainTextArr[i] == textArray1[j]) {
                     position = j;
                 }
             }
-            if(plainTextArr[i] == ' '){
-                chipperText += ' ';
-            }else{
-                chipperText += textGenerateNow[position];
+            for (int k = 0; k < 26; k++) {
+                if (textGenerateNow1[position] == textArray1[k]) {
+                    finalPosition = k;
+                }
             }
-          
+            if (plainTextArr[i] == ' ') {
+                chipperText += ' ';
+            } else {
+                chipperText += textGenerateNow2[finalPosition];
+            }
+
         }
-        
+
         return chipperText;
     }
-    
-    private String dekripsi(String chipperText, String key) {
-        if(kliken != 1 && klikdek == 0){
-            generateKey(key);
+
+    private String dekripsi(String chipperText, String key1, String key2) {
+        if (kliken != 1 && klikdek == 0) {
+            generateKeyOne(key1);
+            generateKeyTwo(key2);
             klikdek = 1;
-            keyDek = key;
-        }else if(klikdek ==1 && keyDek != key){
-            generateKey(key);
         }
         char[] chipperTextArr = chipperText.toCharArray();
         String plainText = "";
-        
-        for(int i=0;i<chipperTextArr.length;i++){
+
+        for (int i = 0; i < chipperTextArr.length; i++) {
             int position = 0;
-            for(int j =0;j<26;j++){
-                if(chipperTextArr[i] == textGenerateNow[j]){
+            int finalPosition = 0;
+            for (int j = 0; j < 26; j++) {
+                if (chipperTextArr[i] == textGenerateNow2[j]) {
                     position = j;
                 }
             }
-            if(chipperTextArr[i] == ' '){
-                plainText += ' ';
-            }else{
-                plainText += textArray[position];
+
+            for (int k = 0; k < 26; k++) {
+                if (textArray2[position] == textGenerateNow1[k]) {
+                    finalPosition = k;
+                }
             }
-          
+            if (chipperTextArr[i] == ' ') {
+                plainText += ' ';
+            } else {
+                plainText += textArray1[finalPosition];
+            }
+
         }
-        
+
         return plainText;
     }
 
@@ -139,6 +181,9 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         fieldKunciEn2 = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        buttonKembali = new javax.swing.JButton();
+        buttonReset1 = new javax.swing.JButton();
+        buttonReset2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -226,10 +271,35 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
 
         jLabel10.setText("Kunci 2");
 
+        buttonKembali.setText("Kembali");
+        buttonKembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonKembaliActionPerformed(evt);
+            }
+        });
+
+        buttonReset1.setText("Reset Kunci");
+        buttonReset1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonReset1ActionPerformed(evt);
+            }
+        });
+
+        buttonReset2.setText("Reset Kunci");
+        buttonReset2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonReset2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(180, 180, 180))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -247,12 +317,16 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
                                     .addComponent(jLabel10))
                                 .addGap(61, 61, 61)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldKunciDek1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fieldChipperTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(buttonProsesDek)
                                     .addComponent(fieldChipperTeksEn, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fieldPlainTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldKunciDek2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldKunciDek1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(fieldKunciDek2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(buttonReset2))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -260,15 +334,18 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
                                     .addComponent(jLabel9))
                                 .addGap(80, 80, 80)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(fieldKunciEn1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(fieldPlainTeksEn, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(buttonProsesEn)
-                                    .addComponent(fieldKunciEn2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(fieldKunciEn1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(fieldKunciEn2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addComponent(buttonReset1))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buttonKembali)))
                 .addContainerGap(115, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addGap(180, 180, 180))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -286,13 +363,18 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel3))
-                    .addComponent(fieldKunciEn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(fieldKunciEn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel3))
+                            .addComponent(fieldKunciEn1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel9)
+                            .addComponent(fieldKunciEn2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(buttonReset1)))
                 .addGap(21, 21, 21)
                 .addComponent(buttonProsesEn)
                 .addGap(18, 18, 18)
@@ -311,20 +393,27 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
                         .addGap(18, 18, 18)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jLabel7))
-                    .addComponent(fieldKunciDek1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fieldKunciDek2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(11, 11, 11)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(jLabel7))
+                            .addComponent(fieldKunciDek1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(fieldKunciDek2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(buttonReset2)))
+                .addGap(57, 57, 57)
                 .addComponent(buttonProsesDek)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(fieldPlainTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addContainerGap(61, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonKembali)
+                .addContainerGap())
         );
 
         pack();
@@ -343,7 +432,9 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
     }//GEN-LAST:event_fieldPlainTeksEnActionPerformed
 
     private void buttonProsesDekActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonProsesDekActionPerformed
-        fieldPlainTeksDek.setText(dekripsi(fieldChipperTeksDek.getText(), fieldKunciDek1.getText()));
+
+        fieldPlainTeksDek.setText(dekripsi(fieldChipperTeksDek.getText(), fieldKunciDek1.getText(), fieldKunciDek2.getText()));
+
     }//GEN-LAST:event_buttonProsesDekActionPerformed
 
     private void fieldKunciEn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldKunciEn1ActionPerformed
@@ -352,11 +443,12 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
 
     private void buttonProsesEnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonProsesEnActionPerformed
         if (!fieldPlainTeksEn.getText().isEmpty() && !fieldKunciEn1.getText().isEmpty()) {
-            fieldChipperTeksEn.setText(enkripsi(fieldPlainTeksEn.getText(), fieldKunciEn1.getText()));
+            fieldChipperTeksEn.setText(enkripsi(fieldPlainTeksEn.getText(), fieldKunciEn1.getText(), fieldKunciEn2.getText()));
 
             fieldChipperTeksDek.setText(fieldChipperTeksEn.getText());
             fieldKunciDek1.setText(fieldKunciEn1.getText());
         }
+        fieldKunciDek2.setText(fieldKunciEn2.getText());
     }//GEN-LAST:event_buttonProsesEnActionPerformed
 
     private void fieldChipperTeksEnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fieldChipperTeksEnActionPerformed
@@ -375,6 +467,25 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_fieldKunciEn2ActionPerformed
 
+    private void buttonKembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonKembaliActionPerformed
+        new FormEncryptionApp().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_buttonKembaliActionPerformed
+
+    private void buttonReset1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReset1ActionPerformed
+        kliken = 0;
+        klikdek = 0;
+        fieldKunciEn1.setText("");
+        fieldKunciEn2.setText("");
+    }//GEN-LAST:event_buttonReset1ActionPerformed
+
+    private void buttonReset2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonReset2ActionPerformed
+        kliken = 0;
+        klikdek = 0;
+        fieldKunciDek1.setText("");
+        fieldKunciDek2.setText("");
+    }//GEN-LAST:event_buttonReset2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -392,27 +503,31 @@ public class FormPlyalphabeticalTwoKey extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormPlyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPolyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormPlyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPolyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormPlyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPolyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormPlyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FormPolyalphabeticalTwoKey.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormPlyalphabeticalTwoKey().setVisible(true);
+                new FormPolyalphabeticalTwoKey().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonKembali;
     private javax.swing.JButton buttonProsesDek;
     private javax.swing.JButton buttonProsesEn;
+    private javax.swing.JButton buttonReset1;
+    private javax.swing.JButton buttonReset2;
     private javax.swing.JTextField fieldChipperTeksDek;
     private javax.swing.JTextField fieldChipperTeksEn;
     private javax.swing.JTextField fieldKunciDek1;

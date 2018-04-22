@@ -137,10 +137,12 @@ public class FormEncryptionApp extends javax.swing.JFrame {
 
     private void buttonPoly2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPoly2ActionPerformed
         new FormPolyalphabeticalTwoKey().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_buttonPoly2ActionPerformed
 
     private void buttonPoly1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPoly1ActionPerformed
         new FormPolyalphabeticalOneKey().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_buttonPoly1ActionPerformed
 
     /**
