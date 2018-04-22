@@ -41,6 +41,11 @@ public class FormEncryptionApp extends javax.swing.JFrame {
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton1.setText("Caesar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         buttonPoly1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         buttonPoly1.setText("Polyalphabetical One Key");
@@ -68,7 +73,7 @@ public class FormEncryptionApp extends javax.swing.JFrame {
         jLabel3.setText("NIM Anggota 2");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel4.setText("10114476");
+        jLabel4.setText("10114474");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel5.setText("NIM Anggota 3");
@@ -142,6 +147,10 @@ public class FormEncryptionApp extends javax.swing.JFrame {
     private void buttonPoly1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonPoly1ActionPerformed
         new FormPolyalphabeticalOneKey().setVisible(true);
     }//GEN-LAST:event_buttonPoly1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new FormSubtitusiCaesar().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
