@@ -39,10 +39,15 @@ public class FormEncryptionApp extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
         jButton1.setText("Caesar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
-        buttonPoly1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        buttonPoly1.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
         buttonPoly1.setText("Polyalphabetical One Key");
         buttonPoly1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,7 +55,7 @@ public class FormEncryptionApp extends javax.swing.JFrame {
             }
         });
 
-        buttonPoly2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        buttonPoly2.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
         buttonPoly2.setText("Polyalphabetical Two Key");
         buttonPoly2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -68,13 +73,13 @@ public class FormEncryptionApp extends javax.swing.JFrame {
         jLabel3.setText("NIM Anggota 2");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel4.setText("10114476");
+        jLabel4.setText("10114474");
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 0, 14)); // NOI18N
         jLabel5.setText("NIM Anggota 3");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel6.setText("10114476");
+        jLabel6.setText("10114491");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,7 +107,7 @@ public class FormEncryptionApp extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addGap(64, 64, 64)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(64, 64, 64)
                         .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -117,11 +122,11 @@ public class FormEncryptionApp extends javax.swing.JFrame {
                     .addComponent(buttonPoly1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(buttonPoly2)
-                .addGap(106, 106, 106)
+                .addGap(111, 111, 111)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jLabel4))
@@ -129,7 +134,7 @@ public class FormEncryptionApp extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addContainerGap(131, Short.MAX_VALUE))
+                .addContainerGap(127, Short.MAX_VALUE))
         );
 
         pack();
@@ -144,6 +149,11 @@ public class FormEncryptionApp extends javax.swing.JFrame {
         new FormPolyalphabeticalOneKey().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_buttonPoly1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        new FormSubtitusiCaesar().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

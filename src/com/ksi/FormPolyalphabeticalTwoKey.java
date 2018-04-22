@@ -10,7 +10,6 @@ package com.ksi;
  * @author Biekaeksa
  */
 public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
-
     private char[] textGenerateNow1 = new char[26];
     private char[] textGenerateNow2 = new char[26];
     char[] textArray1;
@@ -28,7 +27,7 @@ public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
     private void generateKeyOne(String key) {
         String abcd = "abcdefghijklmnopqrstuvwxyz";
         textArray1 = abcd.toCharArray();
-        char[] keyArr = key.toCharArray();
+        char[] keyArr = key.toLowerCase().toCharArray();
 
         for (int i = 0; i < 26; i++) {
             if (i < keyArr.length) {
@@ -56,7 +55,7 @@ public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
         String abcd = "abcdefghijklmnopqrstuvwxyz";
 
         textArray2 = abcd.toCharArray();
-        char[] keyArr = key.toCharArray();
+        char[] keyArr = key.toLowerCase().toCharArray();
 
         for (int i = 0; i < 26; i++) {
             if (i < keyArr.length) {
@@ -91,7 +90,7 @@ public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
             kliken = 1;
         }
 
-        char[] plainTextArr = plainText.toCharArray();
+        char[] plainTextArr = plainText.toLowerCase().toCharArray();
         String chipperText = "";
 
         for (int i = 0; i < plainTextArr.length; i++) {
@@ -124,7 +123,7 @@ public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
             generateKeyTwo(key2);
             klikdek = 1;
         }
-        char[] chipperTextArr = chipperText.toCharArray();
+        char[] chipperTextArr = chipperText.toLowerCase().toCharArray();
         String plainText = "";
 
         for (int i = 0; i < chipperTextArr.length; i++) {
@@ -318,15 +317,15 @@ public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
                                 .addGap(61, 61, 61)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(fieldChipperTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(buttonProsesDek)
                                     .addComponent(fieldChipperTeksEn, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(fieldPlainTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(fieldKunciDek1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(fieldKunciDek2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addComponent(fieldKunciDek2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(buttonProsesDek))
                                         .addGap(18, 18, 18)
-                                        .addComponent(buttonReset2))))
+                                        .addComponent(buttonReset2))
+                                    .addComponent(fieldPlainTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -405,13 +404,13 @@ public class FormPolyalphabeticalTwoKey extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
                         .addComponent(buttonReset2)))
-                .addGap(57, 57, 57)
+                .addGap(18, 18, 18)
                 .addComponent(buttonProsesDek)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(fieldPlainTeksDek, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                 .addComponent(buttonKembali)
                 .addContainerGap())
         );

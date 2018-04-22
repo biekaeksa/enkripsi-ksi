@@ -28,7 +28,7 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
     private void generateKey(String key) {
         String abcd = "abcdefghijklmnopqrstuvwxyz";
         textArray = abcd.toCharArray();
-        char[] keyArr = key.toCharArray();
+        char[] keyArr = key.toLowerCase().toCharArray();
 
         for (int i = 0; i < 26; i++) {
             if (i < keyArr.length) {
@@ -59,7 +59,7 @@ public class FormPolyalphabeticalOneKey extends javax.swing.JFrame {
             kliken = 1;
         }
 
-        char[] plainTextArr = plainText.toCharArray();
+        char[] plainTextArr = plainText.toLowerCase().toCharArray();
         String chipperText = "";
 
         for (int i = 0; i < plainTextArr.length; i++) {
